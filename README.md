@@ -96,11 +96,11 @@ cd ../frontend
 npm start
 
 📺 Demo
-Add your deployed link here (e.g., Vercel, Netlify, Render)
+🌐 Live Demo: https://e-commerce-store-anqa.onrender.com/
+
+Explore the full-stack ecommerce experience with authentication, cart, checkout, admin dashboard, and more.
 
 📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License.
 
 ---
-
-Would you like me to replace the current `README.md` with this updated version? I can [generate the updated file for you](f) or [research how to publish your site on Render or Vercel](dr). ​:contentReference[oaicite:0]{index=0}​
