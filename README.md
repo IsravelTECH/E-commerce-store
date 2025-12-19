@@ -1,4 +1,4 @@
-<h1 align="center">🛒 E-Commerce Store</h1>
+<h1 align="center">🛒 BuyBuddy</h1>
 
 <p align="center">
   A full-stack ecommerce platform built with Node.js, Express, MongoDB, and React.
@@ -95,8 +95,12 @@ npm run dev
 cd ../frontend
 npm start
 
-📺 Demo
-🌐 Live Demo: https://e-commerce-store-anqa.onrender.com/
+## 📺 Demo
+
+🌐 **Live Demo:** [https://e-commerce-store-anqa.onrender.com/](https://e-commerce-store-anqa.onrender.com/)
+
+> Explore BuyBuddy — a full-featured ecommerce experience with cart, checkout, admin dashboard, and more.
+
 
 Explore the full-stack ecommerce experience with authentication, cart, checkout, admin dashboard, and more.
 
