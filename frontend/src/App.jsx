@@ -1,47 +1,42 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 
 import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import CategoryPage from "./pages/CategoryPage";
-
-import Navbar from "./components/Navbar";
-import { Toaster } from "react-hot-toast";
-import { useUserStore } from "./stores/useUserStore";
-import { useEffect } from "react";
-import LoadingSpinner from "./components/LoadingSpinner";
 import CartPage from "./pages/CartPage";
-import { useCartStore } from "./stores/useCartStore";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 import PurchaseCancelPage from "./pages/PurchaseCancelPage";
+
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import LoadingSpinner from "./components/LoadingSpinner";
+
+import { useUserStore } from "./stores/useUserStore";
+import { useCartStore } from "./stores/useCartStore";
 
 function App() {
 	const { user, checkAuth, checkingAuth } = useUserStore();
 	const { getCartItems } = useCartStore();
+
 	useEffect(() => {
 		checkAuth();
 	}, [checkAuth]);
 
 	useEffect(() => {
 		if (!user) return;
-
 		getCartItems();
 	}, [getCartItems, user]);
 
 	if (checkingAuth) return <LoadingSpinner />;
 
 	return (
-		<div className='min-h-screen bg-gray-900 text-white relative overflow-hidden'>
-			{/* Background gradient */}
-			<div className='absolute inset-0 overflow-hidden'>
-				<div className='absolute inset-0'>
-					<div className='absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.3)_0%,rgba(10,80,60,0.2)_45%,rgba(0,0,0,0.1)_100%)]' />
-				</div>
-			</div>
-
-			<div className='relative z-50 pt-20'>
-				<Navbar />
+		<div className='min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-blue-600 selection:text-white'>
+			<Navbar />
+			<main className='flex-1 w-full pt-16 md:pt-20'>
 				<Routes>
 					<Route path='/' element={<HomePage />} />
 					<Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to='/' />} />
@@ -58,8 +53,36 @@ function App() {
 					/>
 					<Route path='/purchase-cancel' element={user ? <PurchaseCancelPage /> : <Navigate to='/login' />} />
 				</Routes>
-			</div>
-			<Toaster />
+			</main>
+			<Footer />
+			<Toaster
+				position='top-center'
+				toastOptions={{
+					duration: 3500,
+					style: {
+						background: '#ffffff',
+						color: '#0f172a',
+						border: '1px solid #e2e8f0',
+						padding: '12px 16px',
+						boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04)',
+						borderRadius: '12px',
+						fontSize: '14px',
+						fontWeight: 500,
+					},
+					success: {
+						iconTheme: {
+							primary: '#16a34a',
+							secondary: '#ffffff',
+						},
+					},
+					error: {
+						iconTheme: {
+							primary: '#dc2626',
+							secondary: '#ffffff',
+						},
+					},
+				}}
+			/>
 		</div>
 	);
 }
