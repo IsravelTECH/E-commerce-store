@@ -6,7 +6,7 @@ import { ChevronRight, ShoppingBag, PackageOpen, ArrowLeft } from "lucide-react"
 import ProductCard from "../components/ProductCard";
 
 const CategoryPage = () => {
-	const { fetchProductsByCategory, products, isLoading } = useProductStore();
+	const { fetchProductsByCategory, products, loading } = useProductStore();
 	const { category } = useParams();
 
 	useEffect(() => {
@@ -55,7 +55,7 @@ const CategoryPage = () => {
 
 			{/* Products Grid */}
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12'>
-				{isLoading ? (
+				{loading ? (
 					<div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6'>
 						{[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
 							<div key={n} className='bg-white rounded-2xl border border-slate-200 p-4 animate-pulse space-y-3'>

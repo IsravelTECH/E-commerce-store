@@ -84,7 +84,7 @@ const ProductCard = ({ product }) => {
 						) : (
 							<>
 								<ShoppingCart className='w-4 h-4 mr-1.5' />
-								<span>Add to Cart</span>
+								<span>Add</span>
 							</>
 						)}
 					</button>

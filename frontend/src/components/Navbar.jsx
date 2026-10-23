@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { 
 	ShoppingCart, 
@@ -35,14 +35,26 @@ const Navbar = () => {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [categoriesDropdownOpen, setCategoriesDropdownOpen] = useState(false);
+	const dropdownRef = useRef(null);
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	// Close mobile menu on route change
+	// Close menus on route change
 	useEffect(() => {
 		setMobileMenuOpen(false);
 		setCategoriesDropdownOpen(false);
 	}, [location.pathname]);
+
+	// Handle outside click for Categories dropdown
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+				setCategoriesDropdownOpen(false);
+			}
+		};
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => document.removeEventListener("mousedown", handleClickOutside);
+	}, []);
 
 	const totalCartItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
@@ -54,11 +66,16 @@ const Navbar = () => {
 		if (match) {
 			navigate(match.href);
 		} else {
-			// default to category search or category list
 			navigate(`/category/${searchQuery.trim().toLowerCase()}`);
 		}
 		setSearchQuery("");
 		setMobileMenuOpen(false);
+	};
+
+	const handleCategoryClick = (href) => {
+		setCategoriesDropdownOpen(false);
+		setMobileMenuOpen(false);
+		navigate(href);
 	};
 
 	return (
@@ -108,27 +125,37 @@ const Navbar = () => {
 						</Link>
 
 						{/* Categories Dropdown */}
-						<div className='relative'>
+						<div className='relative' ref={dropdownRef}>
 							<button
+								type='button'
 								onClick={() => setCategoriesDropdownOpen(!categoriesDropdownOpen)}
-								onBlur={() => setTimeout(() => setCategoriesDropdownOpen(false), 200)}
-								className='flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-100/70 transition-colors'
+								className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${
+									categoriesDropdownOpen || location.pathname.startsWith('/category')
+										? "text-blue-600 bg-blue-50/60"
+										: "text-slate-700 hover:text-slate-900 hover:bg-slate-100/70"
+								}`}
+								aria-expanded={categoriesDropdownOpen}
+								aria-haspopup='true'
 							>
 								<span>Categories</span>
-								<ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${categoriesDropdownOpen ? "rotate-180" : ""}`} />
+								<ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${categoriesDropdownOpen ? "rotate-180 text-blue-600" : ""}`} />
 							</button>
 
 							{categoriesDropdownOpen && (
-								<div className='absolute top-full right-0 mt-1 w-48 bg-white rounded-xl shadow-dropdown border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150'>
+								<div className='absolute top-full left-0 sm:left-auto sm:right-0 mt-2 w-52 bg-white rounded-2xl shadow-dropdown border border-slate-200/80 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150'>
+									<div className='px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 mb-1'>
+										Shop by Category
+									</div>
 									{categories.map((c) => (
-										<Link
+										<button
 											key={c.name}
-											to={c.href}
-											className='block px-4 py-2 text-sm text-slate-700 hover:text-blue-600 hover:bg-slate-50 transition-colors font-medium'
-											onClick={() => setCategoriesDropdownOpen(false)}
+											type='button'
+											onClick={() => handleCategoryClick(c.href)}
+											className='w-full text-left flex items-center justify-between px-4 py-2.5 text-sm text-slate-700 hover:text-blue-600 hover:bg-blue-50/60 transition-colors font-medium rounded-lg'
 										>
-											{c.name}
-										</Link>
+											<span>{c.name}</span>
+											<span className='text-xs text-slate-400 font-normal'>Explore →</span>
+										</button>
 									))}
 								</div>
 							)}
@@ -296,13 +323,14 @@ const Navbar = () => {
 						</div>
 						<div className='flex flex-wrap gap-1.5'>
 							{categories.map((c) => (
-								<Link
+								<button
 									key={c.name}
-									to={c.href}
+									type='button'
+									onClick={() => handleCategoryClick(c.href)}
 									className='px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors'
 								>
 									{c.name}
-								</Link>
+								</button>
 							))}
 						</div>
 					</div>
