@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="50%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#0EA5E9" />
+    </linearGradient>
+    <linearGradient id="bagGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#F1F5F9" />
+    </linearGradient>
+    <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047" />
+      <stop offset="100%" stop-color="#F59E0B" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#0f172a" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Background Squircle -->
+  <rect x="24" y="24" width="464" height="464" rx="116" fill="url(#bgGrad)" />
+  
+  <!-- Subtle Highlight Arc -->
+  <path d="M 50 140 A 180 180 0 0 1 462 140 A 240 240 0 0 0 50 140 Z" fill="#FFFFFF" fill-opacity="0.15" />
+
+  <!-- Bag Graphic with Drop Shadow -->
+  <g filter="url(#shadow)">
+    <!-- Bag Handle -->
+    <path d="M 196 210 V 170 C 196 136 222 110 256 110 C 290 110 316 136 316 170 V 210" 
+          fill="none" stroke="#FFFFFF" stroke-width="24" stroke-linecap="round" />
+    
+    <!-- Bag Body -->
+    <rect x="140" y="200" width="232" height="196" rx="36" fill="url(#bagGrad)" />
+
+    <!-- Center Brand Emblem ("B" Monogram) -->
+    <circle cx="256" cy="298" r="42" fill="#EFF6FF" />
+    <path d="M 242 276 H 258 C 267 276 273 280 273 287 C 273 293 269 296 263 297 C 270 298 275 303 275 310 C 275 318 268 322 258 322 H 242 Z M 250 284 V 294 H 257 C 262 294 265 292 265 289 C 265 286 262 284 257 284 Z M 250 302 V 314 H 258 C 263 314 267 312 267 308 C 267 304 263 302 258 302 Z" 
+          fill="#2563EB" />
+  </g>
+
+  <!-- Sparkle Star in Top-Right -->
+  <g transform="translate(372, 136)">
+    <path d="M 0 -36 Q 0 0 36 0 Q 0 0 0 36 Q 0 0 -36 0 Q 0 0 0 -36 Z" fill="url(#starGrad)" />
+    <circle cx="0" cy="0" r="8" fill="#FFFFFF" />
+  </g>
+</svg>
