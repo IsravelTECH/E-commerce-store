@@ -7,7 +7,8 @@ export default defineConfig({
 	server: {
 		proxy: {
 			"/api": {
-				target: "http://localhost:5000",
+				target: "https://e-commerce-store-anqa.onrender.com",
+				changeOrigin: true,
 			},
 		},
 	},
